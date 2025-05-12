@@ -6,16 +6,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "Spring")
 public interface ProdutoMapper {
 
-    @Mapping(target = "produto.id", source = "produtoId")
+    @Mapping(source = "produtoId", target = "id")
+    @Mapping(source = "skuDoProduto", target = "sku")
     Produto toEntity(ProdutoDTO dto);
 
-    @Mapping(target = "produtoId", source = "produto.id")
+    @Mapping(source = "id", target = "produtoId")
+    @Mapping(source = "sku", target = "skuDoProduto")
     ProdutoDTO toDto(Produto entity);
 
-    @Mapping(target = "produto.id", source = "produtoId")
     @Mapping(target = "id", ignore = true)
+    @Mapping(source = "skuDoProduto", target = "sku")
     void updateFromDto(ProdutoDTO dto, @MappingTarget Produto entity);
 }
