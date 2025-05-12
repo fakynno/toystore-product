@@ -36,7 +36,7 @@ public class Produto {
     private int quantidadePecas; // ex: quebra-cabeças, Lego etc
     private BigDecimal preco;
 
-    // Gerar o SKU automanticamente
+    // Gerar o SKU automaticamente
     @PrePersist
     public void gerarSku() {
         this.sku = SkuGenerator.gerar(
