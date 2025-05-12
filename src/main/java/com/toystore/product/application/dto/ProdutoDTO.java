@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 public record ProdutoDTO(
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(example = "1")
-    Long id,
+    Long produtoId,
 
     @NotBlank(message = "O nome do produto é obrigatório.")
     @Min(value = 3, message = "O nome do produto deve ter no mínimo 3 caracteres.")
@@ -42,6 +42,10 @@ public record ProdutoDTO(
     @NotBlank(message = "O preço do produto é obrigatório.")
     @Min(value = 1, message = "O preço do produto deve ser maior do que 1.")
     @Schema(example = "99.99")
-    String preco
+    String preco,
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(example = "MAR-PRO-AZU-M-3")
+    String skuDoProduto
 ) {
 }
