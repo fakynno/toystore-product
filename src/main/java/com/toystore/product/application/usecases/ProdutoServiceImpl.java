@@ -37,6 +37,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public ProdutoDTO salvar(ProdutoDTO produtoDto) {
+        if (produtoDto.produtoId() != null && produtoRepository.findById(produtoDto.produtoId()).isEmpty()) {
+            throw new RecursoNaoEncontradoException("Produto não encontrado com id: " + produtoDto.produtoId());
+        }
         Produto produto = produtoMapper.toEntity(produtoDto);
         Produto produtoSalvo = produtoRepository.save(produto);
         return produtoMapper.toDto(produtoSalvo);
