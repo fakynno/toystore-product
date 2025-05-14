@@ -1,0 +1,4 @@
+SELECT 'Cleaning the database' AS Status;
+--RUNCATE TABLE produto RESTART IDENTITY CASCADE;
+
+DELETE FROM produto RESTART;
