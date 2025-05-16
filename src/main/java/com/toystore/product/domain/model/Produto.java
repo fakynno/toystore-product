@@ -33,7 +33,7 @@ public class Produto {
     private String cor;
     private String tamanho;
     private String faixaEtaria;
-    private int quantidadePecas; // ex: quebra-cabeças, Lego etc
+    private Integer quantidadePecas; // ex: quebra-cabeças, Lego etc
     private BigDecimal preco;
 
     // Gerar o SKU automaticamente
