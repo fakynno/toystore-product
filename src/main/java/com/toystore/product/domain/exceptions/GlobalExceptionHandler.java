@@ -2,6 +2,7 @@ package com.toystore.product.domain.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -28,6 +29,16 @@ public class GlobalExceptionHandler {
         errorDetails.put("message", e.getMessage());
         errorDetails.put("status", HttpStatus.CONFLICT.value());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        Map<String, Object> errorDetails = new HashMap<>();
+        errorDetails.put("timestamp", LocalDateTime.now());
+        errorDetails.put("message", "Validation failed");
+        errorDetails.put("status", HttpStatus.BAD_REQUEST.value());
+        errorDetails.put("errors", e.getBindingResult().getFieldErrors());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails);
     }
 
 }
