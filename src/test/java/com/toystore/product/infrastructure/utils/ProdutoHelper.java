@@ -30,7 +30,7 @@ public class ProdutoHelper {
                 produto.getTamanho(),
                 produto.getFaixaEtaria(),
                 produto.getQuantidadePecas(),
-                produto.getPreco().toString(),
+                produto.getPreco(),
                 produto.getSku()
         );
     }
