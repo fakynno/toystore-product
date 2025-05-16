@@ -2,6 +2,7 @@ package com.toystore.product.interfaces.controller;
 
 import com.toystore.product.application.dto.ProdutoDTO;
 import com.toystore.product.application.usecases.ProdutoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,13 @@ public class ProdutoControllerImpl implements ProdutoController {
     }
 
     @Override
-    public ResponseEntity<ProdutoDTO> salvar(@RequestBody ProdutoDTO produtoDto) {
+    public ResponseEntity<ProdutoDTO> salvar(@Valid @RequestBody ProdutoDTO produtoDto) {
         ProdutoDTO produtoCriado = produtoService.salvar(produtoDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoCriado);
     }
 
     @Override
-    public ResponseEntity<ProdutoDTO> atualizar(Long idProduto, ProdutoDTO produtoDto) {
+    public ResponseEntity<ProdutoDTO> atualizar(Long idProduto, @Valid @RequestBody ProdutoDTO produtoDto) {
         produtoDto = produtoService.atualizar(idProduto, produtoDto);
         return ResponseEntity.ok(produtoDto);
     }
