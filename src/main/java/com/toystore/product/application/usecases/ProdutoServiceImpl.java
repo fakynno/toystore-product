@@ -1,6 +1,7 @@
 package com.toystore.product.application.usecases;
 
 import com.toystore.product.application.dto.ProdutoDTO;
+import com.toystore.product.domain.exceptions.RecursoJaSalvoException;
 import com.toystore.product.domain.exceptions.RecursoNaoEncontradoException;
 import com.toystore.product.domain.model.Produto;
 import com.toystore.product.domain.repository.ProdutoRepository;
@@ -39,6 +40,12 @@ public class ProdutoServiceImpl implements ProdutoService {
     public ProdutoDTO salvar(ProdutoDTO produtoDto) {
         if (produtoDto.produtoId() != null && produtoRepository.findById(produtoDto.produtoId()).isEmpty()) {
             throw new RecursoNaoEncontradoException("Produto não encontrado com id: " + produtoDto.produtoId());
+        }
+        if (produtoRepository.findBySku((produtoDto.skuDoProduto())).isPresent()) {
+            throw new RecursoJaSalvoException("Produto já cadastrado com sku: " + produtoDto.skuDoProduto());
+        }
+        if (produtoRepository.existsByNome((produtoDto.nome()))) {
+            throw new RecursoJaSalvoException("Recurso já salvo");
         }
         Produto produto = produtoMapper.toEntity(produtoDto);
         Produto produtoSalvo = produtoRepository.save(produto);

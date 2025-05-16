@@ -18,6 +18,9 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.math.BigDecimal;
+
 import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -58,7 +61,7 @@ class ProdutoControllerIT {
         void deveRetornar200_QuandoProdutoExistir() {
             // Arrange
             ProdutoDTO produtoSalvo = produtoService.salvar(new ProdutoDTO(
-                    null, "Produto Teste", "Marca Teste", "Azul", "M", "Adulto", 10, "99.99", null
+                    null, "Produto Teste", "Marca Teste", "Azul", "M", "Adulto", 10, BigDecimal.valueOf(99.99), null
             ));
 
             // Act & Assert
@@ -95,7 +98,7 @@ class ProdutoControllerIT {
         void deveRetornar200_QuandoExistemProdutos() {
             // Arrange
             produtoService.salvar(new ProdutoDTO(
-                    null, "Produto Teste", "Marca Teste", "Azul", "M", "Adulto", 10, "99.99", null
+                    null, "Produto Teste", "Marca Teste", "Azul", "M", "Adulto", 10, BigDecimal.valueOf(99.99), null
             ));
 
             // Act & Assert
@@ -112,13 +115,13 @@ class ProdutoControllerIT {
         void deveRetornar200_QuandoExistemVariosProdutos() {
             // Arrange
             produtoService.salvar(new ProdutoDTO(
-                    null, "Produto Teste", "Marca Teste", "Azul", "M", "Adulto", 10, "99.99", SkuGenerator.gerar("Marca Teste", "Produto Teste", "Azul", "M", "Adulto")
+                    null, "Produto Teste", "Marca Teste", "Azul", "M", "Adulto", 10, BigDecimal.valueOf(99.99), SkuGenerator.gerar("Marca Teste", "Produto Teste", "Azul", "M", "Adulto")
             ));
             produtoService.salvar(new ProdutoDTO(
-                    null, "Produto 1", "Marca 1", "Vermelho", "P", "Infantil", 5, "49.99", SkuGenerator.gerar("Teste Marca", "Produto 1", "Vermelho", "P", "Infantil")
+                    null, "Produto 1", "Marca 1", "Vermelho", "P", "Infantil", 5, BigDecimal.valueOf(49.99), SkuGenerator.gerar("Teste Marca", "Produto 1", "Vermelho", "P", "Infantil")
             ));
             produtoService.salvar(new ProdutoDTO(
-                    null, "Produto 2", "Marca 2", "Azul", "M", "Adulto", 10, "99.99", SkuGenerator.gerar("Bandai Marca 2", "Produto 2", "Azul", "M", "Adulto")
+                    null, "Produto 2", "Marca 2", "Azul", "M", "Adulto", 10, BigDecimal.valueOf(99.99), SkuGenerator.gerar("Bandai Marca 2", "Produto 2", "Azul", "M", "Adulto")
             ));
 
             // Act & Assert
@@ -154,7 +157,7 @@ class ProdutoControllerIT {
         void deveSalvarProduto_ComSucesso() {
             // Arrange
             ProdutoDTO novoProduto = new ProdutoDTO(
-                    null, "Produto Novo", "Marca Nova", "Preto", "G", "Adulto", 15, "199.99", null
+                    null, "Produto Novo", "Marca Nova", "Preto", "G", "Adulto", 15, BigDecimal.valueOf(199.99), null
             );
 
             // Act & Assert
@@ -169,8 +172,8 @@ class ProdutoControllerIT {
                     .body("marca", equalTo("Marca Nova"))
                     .body("cor", equalTo("Preto"))
                     .body("tamanho", equalTo("G"))
-                    .body("publicoAlvo", equalTo("Adulto"))
-                    .body("quantidade", equalTo(15))
+                    .body("faixaEtaria", equalTo("Adulto"))
+                    .body("quantidadePecas", equalTo(15))
                     .body("preco", equalTo(199.99f));
         }
 
@@ -203,11 +206,11 @@ class ProdutoControllerIT {
         void deveAtualizarProduto_ComSucesso() {
             // Arrange
             ProdutoDTO produtoSalvo = produtoService.salvar(new ProdutoDTO(
-                    null, "Produto Antigo", "Marca Antiga", "Branco", "M", "Adulto", 5, "49.99", null
+                    null, "Produto Antigo", "Marca Antiga", "Branco", "M", "Adulto", 5, BigDecimal.valueOf(49.99), null
             ));
 
             ProdutoDTO produtoAtualizado = new ProdutoDTO(
-                    null, "Produto Atualizado", "Marca Atualizada", "Preto", "G", "Infantil", 10, "99.99", null
+                    null, "Produto Atualizado", "Marca Atualizada", "Preto", "G", "Infantil", 10, BigDecimal.valueOf(99.99), null
             );
 
             // Act & Assert
@@ -224,7 +227,7 @@ class ProdutoControllerIT {
                     .body("tamanho", equalTo("G"))
                     .body("faixaEtaria", equalTo("Infantil"))
                     .body("quantidadePecas", equalTo(10))
-                    .body("preco", equalTo("99.99"));
+                    .body("preco", equalTo(99.99f));
         }
 
         @DisplayName("Deve retornar 404 quando o produto não existir")
@@ -232,7 +235,7 @@ class ProdutoControllerIT {
         void deveRetornar404_QuandoProdutoNaoExistir() {
             // Arrange
             ProdutoDTO produtoAtualizado = new ProdutoDTO(
-                    null, "Produto Atualizado", "Marca Atualizada", "Preto", "G", "Infantil", 10, "99.99", null
+                    null, "Produto Atualizado", "Marca Atualizada", "Preto", "G", "Infantil", 10, BigDecimal.valueOf(99.99), null
             );
 
             // Act & Assert
@@ -250,7 +253,7 @@ class ProdutoControllerIT {
         void deveRetornar400_QuandoDadosInvalidos() {
             // Arrange
             ProdutoDTO produtoSalvo = produtoService.salvar(new ProdutoDTO(
-                    null, "Produto Antigo", "Marca Antiga", "Branco", "M", "Adulto", 5, "49.99", null
+                    null, "Produto Antigo", "Marca Antiga", "Branco", "M", "Adulto", 5, BigDecimal.valueOf(49.99), null
             ));
 
             ProdutoDTO produtoInvalido = new ProdutoDTO(
@@ -277,7 +280,7 @@ class ProdutoControllerIT {
         void deveDeletarProduto_ComSucesso() {
             // Arrange
             ProdutoDTO produtoSalvo = produtoService.salvar(new ProdutoDTO(
-                    null, "Produto Teste", "Marca Teste", "Azul", "M", "Adulto", 10, "99.99", null
+                    null, "Produto Teste", "Marca Teste", "Azul", "M", "Adulto", 10, BigDecimal.valueOf(99.99), null
             ));
 
             // Act & Assert
@@ -299,6 +302,33 @@ class ProdutoControllerIT {
                     .delete("/produtos/{idProduto}", 999L)
                     .then()
                     .statusCode(404);
+        }
+    }
+
+    @DisplayName("Salvar produto duplicado")
+    @Nested
+    class SalvarProdutoDuplicado {
+
+        @DisplayName("Deve retornar 409 quando tentar salvar um produto já existente")
+        @Test
+        void deveRetornar409_QuandoProdutoJaExistir() {
+            // Arrange
+            ProdutoDTO produtoDuplicado = new ProdutoDTO(
+                    null, "Produto Duplicado", "Marca Duplicada", "Azul", "M", "Adulto", 10, BigDecimal.valueOf(99.99), null
+            );
+
+            produtoService.salvar(produtoDuplicado);
+
+            // Act & Assert
+            RestAssured.given()
+                    .spec(requestSpec)
+                    .body(produtoDuplicado)
+                    .when()
+                    .post("/produtos")
+                    .then()
+                    .statusCode(409)
+                    .body("message", equalTo("Recurso já salvo"))
+                    .body("status", equalTo(409));
         }
     }
 
