@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,7 +20,7 @@ public class ProdutoControllerImpl implements ProdutoController {
     private final ProdutoService produtoService;
 
     @Override
-    public ResponseEntity<ProdutoDTO> buscarPorId(@PathVariable Long idProduto) {
+    public ResponseEntity<ProdutoDTO> buscarPorId(@PathVariable UUID idProduto) {
         return ResponseEntity.ok(produtoService.buscarPorId(idProduto));
     }
 
@@ -35,13 +36,13 @@ public class ProdutoControllerImpl implements ProdutoController {
     }
 
     @Override
-    public ResponseEntity<ProdutoDTO> atualizar(Long idProduto, @Valid @RequestBody ProdutoDTO produtoDto) {
+    public ResponseEntity<ProdutoDTO> atualizar(UUID idProduto, @Valid @RequestBody ProdutoDTO produtoDto) {
         produtoDto = produtoService.atualizar(idProduto, produtoDto);
         return ResponseEntity.ok(produtoDto);
     }
 
     @Override
-    public ResponseEntity<Void> deletarPorId(Long idProduto) {
+    public ResponseEntity<Void> deletarPorId(UUID idProduto) {
         produtoService.deletarPorId(idProduto);
         return ResponseEntity.noContent().build();
     }

@@ -20,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
 
@@ -71,7 +72,7 @@ class ProdutoControllerIT {
                     .get("/produtos/{idProduto}", produtoSalvo.produtoId())
                     .then()
                     .statusCode(200)
-                    .body("produtoId", equalTo(produtoSalvo.produtoId().intValue()))
+                    .body("produtoId", equalTo(produtoSalvo.produtoId().toString()))
                     .body("nome", equalTo("Produto Teste"))
                     .body("marca", equalTo("Marca Teste"));
         }
@@ -83,7 +84,7 @@ class ProdutoControllerIT {
             RestAssured.given()
                     .spec(requestSpec)
                     .when()
-                    .get("/produtos/{idProduto}", 999L)
+                    .get("/produtos/{idProduto}", UUID.randomUUID())
                     .then()
                     .statusCode(404);
         }
@@ -243,7 +244,7 @@ class ProdutoControllerIT {
                     .spec(requestSpec)
                     .body(produtoAtualizado)
                     .when()
-                    .put("/produtos/{idProduto}", 999L)
+                    .put("/produtos/{idProduto}", UUID.randomUUID())
                     .then()
                     .statusCode(404);
         }
@@ -299,7 +300,7 @@ class ProdutoControllerIT {
             RestAssured.given()
                     .spec(requestSpec)
                     .when()
-                    .delete("/produtos/{idProduto}", 999L)
+                    .delete("/produtos/{idProduto}", UUID.randomUUID())
                     .then()
                     .statusCode(404);
         }

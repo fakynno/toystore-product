@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     private final ProdutoMapper produtoMapper;
 
     @Override
-    public ProdutoDTO buscarPorId(Long id) {
+    public ProdutoDTO buscarPorId(UUID id) {
         Produto produto = produtoRepository.findById(id).orElseThrow(() ->
                 new RecursoNaoEncontradoException("Produto não encontrado com id: " + id)
         );
@@ -53,7 +54,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public ProdutoDTO atualizar(Long id, ProdutoDTO produtoDto) {
+    public ProdutoDTO atualizar(UUID id, ProdutoDTO produtoDto) {
         Produto produto = produtoRepository.findById(id).orElseThrow(() ->
                 new RecursoNaoEncontradoException("Produto não encontrado com id: " + id)
         );
@@ -68,7 +69,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 
     @Override
-    public void deletarPorId(Long id) {
+    public void deletarPorId(UUID id) {
         this.buscarPorId(id);
         produtoRepository.deleteById(id);
     }

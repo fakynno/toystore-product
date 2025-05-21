@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 class ProdutoServiceTest {
@@ -56,7 +57,7 @@ class ProdutoServiceTest {
         @Test
         void deveBuscarProdutoPorId() {
             // Arrange
-            Long produtoId = 1L;
+            UUID produtoId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
             when(produtoRepository.findById(produtoId)).thenReturn(Optional.of(produto));
             when(produtoMapper.toDto(produto)).thenReturn(produtoDTO);
 
@@ -72,7 +73,7 @@ class ProdutoServiceTest {
         @Test
         void deveLancarExcecaoQuandoProdutoNaoEncontrado() {
             // Arrange
-            Long produtoId = 1L;
+            UUID produtoId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
             when(produtoRepository.findById(produtoId)).thenReturn(Optional.empty());
 
             // Act & Assert
@@ -129,7 +130,7 @@ class ProdutoServiceTest {
         @Test
         void deveLancarExcecao_QuandoProduto_NaoEncontrado() {
             // Arrange
-            Long produtoId = 1L;
+            UUID produtoId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
             when(produtoRepository.findById(produtoId)).thenReturn(Optional.empty());
 
             // Act & Assert
@@ -148,7 +149,7 @@ class ProdutoServiceTest {
         @Test
         void deveAtualizarProdutoExistente() {
             // Arrange
-            Long produtoId = 1L;
+            UUID produtoId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
             when(produtoRepository.findById(produtoId)).thenReturn(Optional.of(produto));
             when(produtoRepository.save(produto)).thenReturn(produto);
             when(produtoMapper.toDto(produto)).thenReturn(produtoDTO);
@@ -165,7 +166,7 @@ class ProdutoServiceTest {
         @Test
         void deveLancarExcecao_QuandoProdutoNaoEncontrado() {
             // Arrange
-            Long produtoId = 1L;
+            UUID produtoId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
             when(produtoRepository.findById(produtoId)).thenReturn(Optional.empty());
 
             // Act & Assert
@@ -183,7 +184,7 @@ class ProdutoServiceTest {
         @Test
         void deveDeletarProdutoExistente() {
             // Arrange
-            Long produtoId = 1L;
+            UUID produtoId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
             when(produtoRepository.findById(produtoId))
                 .thenReturn(Optional.of(produto))
                 .thenReturn(Optional.empty()); // Após exclusão, retorna vazio
@@ -201,7 +202,7 @@ class ProdutoServiceTest {
         @Test
         void deveLancarExcecao_QuandoProdutoNaoEncontrado() {
             // Arrange
-            Long produtoId = 1L;
+            UUID produtoId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
             when(produtoRepository.findById(produtoId)).thenReturn(Optional.empty());
 
             // Act & Assert

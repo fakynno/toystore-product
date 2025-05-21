@@ -9,11 +9,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record ProdutoDTO(
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Schema(example = "1")
-    Long produtoId,
+    @Schema(example = "3fa85f64-5717-4562-b3fc-2c963f66afa6")
+    UUID produtoId,
 
     @NotBlank(message = "O nome do produto é obrigatório.")
     @Size(min = 3, message = "O nome do produto deve ter no mínimo 3 caracteres.")

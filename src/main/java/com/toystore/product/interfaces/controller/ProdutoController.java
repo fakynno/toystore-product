@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/produtos")
 @Tag(name = "Produtos", description = "Recurso para Gestão de Produtos")
@@ -31,7 +32,7 @@ public interface ProdutoController {
             @ApiResponse(responseCode = "404", description = "Produto não encontrado"),
         @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
         })
-    ResponseEntity<ProdutoDTO> buscarPorId(@PathVariable Long idProduto);
+    ResponseEntity<ProdutoDTO> buscarPorId(@PathVariable UUID idProduto);
 
     @GetMapping
     @Operation(summary = "Busca todos os Produtos", description = "Efetua a busca de todos os Produtos")
@@ -64,7 +65,7 @@ public interface ProdutoController {
             @ApiResponse(responseCode = "404", description = "Produto não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    ResponseEntity<ProdutoDTO> atualizar(@PathVariable Long idProduto, @RequestBody ProdutoDTO produtoDto);
+    ResponseEntity<ProdutoDTO> atualizar(@PathVariable UUID idProduto, @RequestBody ProdutoDTO produtoDto);
 
     @DeleteMapping("/{idProduto}")
     @Operation(summary = "Deleta um Produto", description = "Deleta o registro de um Produto")
@@ -75,5 +76,5 @@ public interface ProdutoController {
             @ApiResponse(responseCode = "404", description = "Produto não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    ResponseEntity<Void> deletarPorId(@PathVariable Long idProduto);
+    ResponseEntity<Void> deletarPorId(@PathVariable UUID idProduto);
 }
